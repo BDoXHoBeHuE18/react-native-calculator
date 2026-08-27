@@ -7,7 +7,8 @@ const Colors = {
     buttonTopShadow: "rgba(255,255,255, .25)",
     numberButtonText: "rgb(124,124,124)",
     operationButtonText: "rgb(255,255,255)",
-    monitor: "rgb(58,60,63)"
+    monitor: "rgb(58,60,63)",
+    monitorText: "rgb(69,255,222)"
 }
 
 export default Colors
