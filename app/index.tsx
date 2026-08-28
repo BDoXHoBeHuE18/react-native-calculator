@@ -15,8 +15,6 @@ export default function CalculatorKeyboard() {
   }
 
   return (
-    <CalcProvider>
-      <Calculator />
-    </CalcProvider>
+    <Calculator />
   );
 }

@@ -10,14 +10,23 @@ export default function Monitor() {
         currentValue,
         lastOperationValue,
         resultValue,
-        isPercented
+        isPercented,
+        isValue0Visible,
+        isValue1Visible,
+        isLastOperationVisible,
+        isResultVisible,
     } = useContext(CalcContext)
 
     return (
         <View style={styles.monitor}>
             <View style={styles.monitorVariables}>
-                <Text style={styles.monitorText}>value-0: {firstValue ?? 'no'}</Text>
-                <Text style={styles.monitorText}>operation: {lastOperationValue ?? 'no'}</Text>
+                <Text numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.9} style={[styles.monitorText, { opacity: isValue0Visible ? 1 : 0 }]}>value-0: {firstValue ?? 'no'}</Text>
+
+                <Text numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.9} style={[styles.monitorText, { opacity: isLastOperationVisible ? 1 : 0 }]}>operation: {lastOperationValue ?? 'no'}</Text>
             </View>
             <View style={styles.monitorCurrent}>
                 <Text
@@ -30,9 +39,15 @@ export default function Monitor() {
                 </Text>
             </View>
             <View style={styles.monitorVariables}>
-                <Text style={styles.monitorText}>value-1: {secondValue ?? 'no'}</Text>
-                {isPercented && <Text style={styles.monitorText}>percent</Text>}
-                <Text style={styles.monitorText}>result: {resultValue ?? 'no'}</Text>
+                <Text numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.9} style={[styles.monitorText, { opacity: isValue1Visible ? 1 : 0 }]}>value-1: {secondValue ?? 'no'}</Text>
+                {isPercented && <Text numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.9} style={styles.monitorText}>%</Text>}
+                <Text numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.9} style={[styles.monitorText, { opacity: isResultVisible ? 1 : 0 }]}>result: {resultValue ?? 'no'}</Text>
             </View>
         </View>
     )
@@ -56,7 +71,8 @@ const styles = StyleSheet.create({
     monitorText: {
         color: Colors.monitorText,
         fontFamily: "RobotoMono-Medium",
-        fontSize: 14
+        fontSize: 14,
+        maxWidth: "45%"
     },
     monitorCurrent: {
         justifyContent: "center",

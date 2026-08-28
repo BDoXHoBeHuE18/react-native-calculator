@@ -1,6 +1,6 @@
 import { Dimensions } from "react-native"
 
-const WindowWidth = Dimensions.get("window").width
+export const WindowWidth = Dimensions.get("window").width
 
 export const CONTAINER_PADDING = WindowWidth / 25
 export const ROW_PADDING = CONTAINER_PADDING / 4

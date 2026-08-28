@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import CalcButton from "./CalcButton";
 import Colors from "../constants/colors";
+import { Ionicons } from '@expo/vector-icons';
 import {
     ButtonWidthHeight,
     CONTAINER_PADDING,
@@ -9,7 +10,7 @@ import {
 } from '../constants/ScreenConfig'
 
 const keyboardRows = [
-    ['SETTINGS', 'C', '⌫'],
+    ['SETTINGS', '√', 'C', '⌫'],
     ['AC', '±', '%', '÷'],
     ['7', '8', '9', '×'],
     ['4', '5', '6', '-'],
@@ -28,7 +29,7 @@ export default function Keyboard() {
                             text={button}
                             color={!['+', '-', '×', '÷', '='].includes(button) ? Colors.white : Colors.pink}
                             textColor={!['+', '-', '×', '÷', '='].includes(button) ? Colors.numberButtonText : Colors.operationButtonText}
-                            width={ !['0', 'SETTINGS'].includes(button) ? ButtonWidthHeight : 2 * ButtonWidthHeight + ROW_GAP}
+                            width={ !['0'].includes(button) ? ButtonWidthHeight : 2 * ButtonWidthHeight + ROW_GAP}
                             height={ButtonWidthHeight} />
                     ))}
                 </View>
