@@ -1,8 +1,7 @@
-import { Pressable, PressableProps, StyleSheet, Text, Dimensions, View } from 'react-native';
+import { Pressable, PressableProps, StyleSheet, Text, View } from 'react-native';
 import Colors from '../constants/colors';
-import { use, useContext, useState, memo, useCallback } from 'react';
+import { useContext, memo, useCallback } from 'react';
 import { CalcContext } from '../context/CalcContext';
-import { MAX_CURRENT_VALUE_LENGTH } from '../constants/ScreenConfig';
 import { Ionicons } from '@expo/vector-icons';
 
 export interface CalcButtonProps extends PressableProps {

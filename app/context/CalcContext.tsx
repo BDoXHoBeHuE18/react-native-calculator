@@ -10,7 +10,7 @@ interface CalcProviderProps {
 }
 
 const STORAGE_KEY = '@settings_states'
-export const CalcProvider = ({ children }: CalcProviderProps) => {
+const CalcProvider = ({ children }: CalcProviderProps) => {
 
     const router = useRouter() 
 
@@ -276,3 +276,5 @@ export const CalcProvider = ({ children }: CalcProviderProps) => {
         </CalcContext.Provider>
     )
 }
+
+export default CalcProvider

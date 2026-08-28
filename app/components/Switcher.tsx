@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
-import { StyleSheet, Switch, Text, View, ViewProps } from "react-native";
+import { ViewProps } from "react-native";
 import Colors from "../constants/colors";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { WindowWidth } from "../constants/ScreenConfig";
 import CalcButton from "./CalcButton";
 

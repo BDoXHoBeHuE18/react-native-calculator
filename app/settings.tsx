@@ -1,7 +1,7 @@
 import { memo, useCallback, useContext } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CalcContext, CalcProvider } from "./context/CalcContext";
+import { CalcContext } from "./context/CalcContext";
 import Switcher from "./components/Switcher";
 import Colors from "./constants/colors";
 import { WindowWidth } from "./constants/ScreenConfig";

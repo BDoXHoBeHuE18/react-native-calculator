@@ -1,6 +1,5 @@
-
 import { Stack } from 'expo-router';
-import { CalcContext, CalcProvider } from './context/CalcContext';
+import CalcProvider from './context/CalcContext';
 
 export default function RootLayout() {
 
