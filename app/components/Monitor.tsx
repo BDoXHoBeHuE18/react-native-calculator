@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Colors from "../constants/colors";
 import { CalcContext } from "../context/CalcContext";
-import { MonitorHeight } from "../constants/ScreenConfig";
+import { CONTAINER_PADDING, MonitorHeight, WindowWidth } from "../constants/ScreenConfig";
 
 export default function Monitor() {
 
@@ -56,6 +56,7 @@ export default function Monitor() {
 
 const styles = StyleSheet.create({
     monitor: {
+        width: WindowWidth - 2 * CONTAINER_PADDING,
         height: MonitorHeight,
         boxShadow: `inset 0px 0px 15px 7px ${Colors.buttonBottomShadow}`,
         backgroundColor: Colors.monitor,

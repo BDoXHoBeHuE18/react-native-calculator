@@ -84,7 +84,6 @@ export const CalcProvider = ({ children }: CalcProviderProps) => {
                 return
             }
 
-
             if (isInterimResult) {
                 setCurrentValue(text)
                 setIsInterimResult(false)
@@ -93,10 +92,11 @@ export const CalcProvider = ({ children }: CalcProviderProps) => {
 
             if (value === '0')
                 setCurrentValue(text)
+            else if (value === '-0')
+                setCurrentValue('-' + text)
             else if (value.length <= MAX_CURRENT_VALUE_LENGTH)
                 setCurrentValue(value + text)
         }
-
 
         else if (text === '.' && !value.includes('.') && value.length < MAX_CURRENT_VALUE_LENGTH) {
             setCurrentValue(value + '.')

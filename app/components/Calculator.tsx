@@ -18,6 +18,7 @@ export default function Calculator() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        alignItems: "center",
         backgroundColor: Colors.lightGray,
         padding: CONTAINER_PADDING,
     },

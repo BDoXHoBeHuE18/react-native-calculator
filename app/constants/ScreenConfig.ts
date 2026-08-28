@@ -1,6 +1,9 @@
-import { Dimensions } from "react-native"
+import { Dimensions, Platform } from "react-native"
 
-export const WindowWidth = Dimensions.get("window").width
+export const WindowWidth = Platform.OS === 'web' ?
+    Math.min(Dimensions.get("window").width, 600) :
+    Dimensions.get("window").width
+
 const WindowHeight = Dimensions.get("window").height
 export const MonitorHeight = 150
 

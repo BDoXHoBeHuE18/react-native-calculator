@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     keyboard: {
         paddingVertical: CONTAINER_PADDING,
         height: KeyboardHeight,
-        overflow: "scroll"
     },
     row: {
         flexDirection: "row",
