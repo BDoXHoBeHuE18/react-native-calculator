@@ -4,3 +4,4 @@
 + Check this app on a real device
 + Write readme.md
 + add this project to portfolio-repository
++ create web-version
