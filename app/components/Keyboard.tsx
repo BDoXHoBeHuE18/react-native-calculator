@@ -1,13 +1,15 @@
 import { StyleSheet, View } from "react-native";
-import CalcButton from "./CalcButton";
 import Colors from "../constants/colors";
-import { Ionicons } from '@expo/vector-icons';
 import {
-    ButtonWidthHeight,
+    ButtonWidth,
+    ButtonHeight,
     CONTAINER_PADDING,
+    KeyboardHeight,
     ROW_GAP,
     ROW_PADDING,
 } from '../constants/ScreenConfig'
+import { memo } from "react";
+import CalcButton from "./CalcButton";
 
 const keyboardRows = [
     ['SETTINGS', '√', 'C', '⌫'],
@@ -18,7 +20,7 @@ const keyboardRows = [
     ['0', '.', '='],
 ];
 
-export default function Keyboard() {
+function Keyboard() {
     return (
         <View style={styles.keyboard}>
             {keyboardRows.map((row, index) => (
@@ -27,10 +29,11 @@ export default function Keyboard() {
                         <CalcButton
                             key={button}
                             text={button}
-                            color={!['+', '-', '×', '÷', '='].includes(button) ? Colors.white : Colors.pink}
+                            color={!['+', '-', '×', '÷', '='].includes(button) ? Colors.commonButtonColor : Colors.operationButtonColor}
                             textColor={!['+', '-', '×', '÷', '='].includes(button) ? Colors.numberButtonText : Colors.operationButtonText}
-                            width={ !['0'].includes(button) ? ButtonWidthHeight : 2 * ButtonWidthHeight + ROW_GAP}
-                            height={ButtonWidthHeight} />
+                            width={ !['0'].includes(button) ? ButtonWidth : 2 * ButtonWidth + ROW_GAP}
+                            height={ButtonHeight}  
+                        />
                     ))}
                 </View>
             ))}
@@ -41,6 +44,8 @@ export default function Keyboard() {
 const styles = StyleSheet.create({
     keyboard: {
         paddingVertical: CONTAINER_PADDING,
+        height: KeyboardHeight,
+        overflow: "scroll"
     },
     row: {
         flexDirection: "row",
@@ -48,3 +53,5 @@ const styles = StyleSheet.create({
         paddingVertical: 2.5 * ROW_PADDING
     },
 })
+
+export default memo(Keyboard)

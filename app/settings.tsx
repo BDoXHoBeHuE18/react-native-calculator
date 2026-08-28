@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { memo, useCallback, useContext } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CalcContext, CalcProvider } from "./context/CalcContext";
@@ -8,7 +8,7 @@ import { WindowWidth } from "./constants/ScreenConfig";
 import CalcButton from "./components/CalcButton";
 import { useRouter } from "expo-router";
 
-export default function SettingsScreen() {
+function SettingsScreen() {
     const router = useRouter()
 
     const { isValue0Visible, setIsValue0Visible,
@@ -16,6 +16,10 @@ export default function SettingsScreen() {
         isLastOperationVisible, setIsLastOperationVisible,
         isResultVisible, setIsResultVisible
     } = useContext(CalcContext)
+
+    const handleClose = useCallback(() => {
+        router.back()
+    }, [router])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -32,9 +36,9 @@ export default function SettingsScreen() {
                 width={WindowWidth * 0.75}
                 height={70}
                 text="close"
-                color={Colors.gray}
-                textColor={Colors.lightGray}
-                onPress={() => router.back()}
+                color={Colors.commonButtonColor}
+                textColor={Colors.settingsActiveButtonText}
+                onPress={handleClose}
                 style={{marginTop: 24}}
             />
         </SafeAreaView>
@@ -51,7 +55,7 @@ const styles = StyleSheet.create({
     settngPanel: {
         padding: WindowWidth * 0.075,
         backgroundColor: Colors.monitor,
-        borderRadius: 6,
+        borderRadius: 24,
         gap: 24,
         boxShadow: `inset 0px 0px 15px 7px ${Colors.buttonBottomShadow}`,
     },
@@ -62,3 +66,5 @@ const styles = StyleSheet.create({
         color: Colors.monitorText
     }
 })
+
+export default memo(SettingsScreen)

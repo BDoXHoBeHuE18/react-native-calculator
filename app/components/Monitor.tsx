@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Colors from "../constants/colors";
 import { CalcContext } from "../context/CalcContext";
+import { MonitorHeight } from "../constants/ScreenConfig";
 
 export default function Monitor() {
 
@@ -55,18 +56,20 @@ export default function Monitor() {
 
 const styles = StyleSheet.create({
     monitor: {
-        flex: 1,
+        height: MonitorHeight,
         boxShadow: `inset 0px 0px 15px 7px ${Colors.buttonBottomShadow}`,
         backgroundColor: Colors.monitor,
         borderRadius: 12,
         justifyContent: "space-between",
         flexDirection: "column",
+        overflow: "hidden"
     },
     monitorVariables: {
         alignItems: "center",
         justifyContent: "space-between",
         flexDirection: "row",
-        padding: 12,
+        paddingHorizontal: 12,
+        paddingVertical: 6
     },
     monitorText: {
         color: Colors.monitorText,

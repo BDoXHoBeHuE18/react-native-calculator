@@ -15,11 +15,11 @@ interface SwitcherProps extends ViewProps {
 export default function Switcher({children, param, func, title} : SwitcherProps) {
     return (
             <CalcButton
-                color={param ? Colors.numberButtonText : Colors.monitor}
+                color={param ? Colors.commonButtonColor : Colors.monitor}
                 width={WindowWidth * 0.75}
                 height={70}
                 text={title}
-                textColor={Colors.monitorText}
+                textColor={param ? Colors.settingsActiveButtonText : Colors.monitorText}
                 onPress={() => func(!param)}
             >
             {children}
