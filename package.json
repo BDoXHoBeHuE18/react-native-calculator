@@ -10,8 +10,8 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "build:web": "npx expo export --platform web",
-    "predeploy": "npm run build:web",
-    "deploy": "gh-pages -d dist"
+    "predeploy": "expo export -p web",
+    "deploy": "gh-pages --nojekyll -d dist"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
