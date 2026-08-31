@@ -23,7 +23,7 @@
       "package": "com.sleepyafterrain.calcapp"
     },
     "web": {
-      "output": "single",
+      "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
