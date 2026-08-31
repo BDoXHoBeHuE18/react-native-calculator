@@ -1,4 +1,5 @@
 {
+  "homepage": "https://BDoXHoBeHuE18.github.io/react-native-calculator",
   "name": "calcapp",
   "main": "expo-router/entry",
   "version": "1.0.0",
@@ -10,7 +11,7 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "predeploy": "npx expo export --platform web",
-    "deploy": "npx gh-pages -d dist --nojekyll"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
