@@ -11,7 +11,7 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "predeploy": "npx expo export --platform web",
-    "deploy": "gh-pages -d dist --nojekyll"
+    "deploy": "gh-pages -d dist --nojekyll -t"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
