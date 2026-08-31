@@ -23,7 +23,7 @@
       "package": "com.sleepyafterrain.calcapp"
     },
     "web": {
-      "output": "static",
+      "output": "single",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
@@ -43,7 +43,8 @@
     ],
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true
+      "reactCompiler": true,
+      "baseUrl": "/react-native-calculator"
     },
     "extra": {
       "router": {},
