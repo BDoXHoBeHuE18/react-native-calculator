@@ -44,8 +44,7 @@
     ],
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true,
-      "baseUrl": "/react-native-calculator"
+      "reactCompiler": true
     },
     "extra": {
       "router": {},
