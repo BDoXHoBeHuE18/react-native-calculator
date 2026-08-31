@@ -24,6 +24,8 @@
     },
     "web": {
       "bundler": "metro",
+      "output": "static",
+      "hashProvider": "hash",
       "baseUrl": "/react-native-calculator"
     },
     "plugins": [
