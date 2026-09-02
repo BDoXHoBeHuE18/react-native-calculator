@@ -16,9 +16,11 @@ const CalcProvider = ({ children }: CalcProviderProps) => {
     const router = useRouter()
 
     const normalizeValue = (value: Big | number) => {
-        const valueStr = value.toString()
-        if (valueStr.length > MAX_CURRENT_VALUE_LENGTH)
-            return value.toFixed(ROUND_TO).toString()
+        const valueNum = typeof value === 'number' ? value : value.toNumber()
+        const valueStr = valueNum.toString()
+        if (valueStr.length > MAX_CURRENT_VALUE_LENGTH) {
+            return valueNum.toExponential(ROUND_TO).toString()
+        }
         return valueStr
     }
 
@@ -140,8 +142,8 @@ const CalcProvider = ({ children }: CalcProviderProps) => {
                     let result = getResultOperation(Big(val1), Big(val2));
                     setCurrentValue(normalizeValue(Big(result)));
                     setResultValue(normalizeValue(result));
-                    setFirstValue(val1.toString());
-                    setSecondValue(val2.toString());
+                    setFirstValue(normalizeValue(val1));
+                    setSecondValue(normalizeValue(val2));
                     setIsInterimResult(true);
                 }
 
@@ -176,8 +178,8 @@ const CalcProvider = ({ children }: CalcProviderProps) => {
             }
             setCurrentValue(normalizeValue(result))
             setResultValue(normalizeValue(result))
-            setFirstValue(val1.toString())
-            setSecondValue(val2.toString())
+            setFirstValue(normalizeValue(val1))
+            setSecondValue(normalizeValue(val2))
             setIsFinalResult(true)
         }
 
@@ -188,10 +190,10 @@ const CalcProvider = ({ children }: CalcProviderProps) => {
             let val1 = resultValue ? parseFloat(resultValue) : parseFloat(firstValue)
             let val2 = parseFloat(value)
             let result = getResultOperation(Big(val1), Big(val2), true)
-            setCurrentValue(parseFloat(result.toFixed(MAX_CURRENT_VALUE_LENGTH - 1)).toString())
-            setResultValue(parseFloat(result.toFixed(MAX_CURRENT_VALUE_LENGTH - 1)).toString())
-            setFirstValue(val1.toString())
-            setSecondValue(val2.toString())
+            setCurrentValue(normalizeValue(result))
+            setResultValue(normalizeValue(result))
+            setFirstValue(normalizeValue(val1))
+            setSecondValue(normalizeValue(val2))
             setIsInterimResult(true)
             setIsPercented(true)
         }
