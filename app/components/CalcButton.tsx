@@ -20,9 +20,9 @@ const CalcButton = ({ children, style, color, textColor, width, height, text, on
 
     const handlePress = useCallback(() => {
         if (onPress) {
-            onPress(); // Если передан кастомный обработчик снаружи
+            onPress();
         } else {
-            handleButtonClick(text); // Поведение по умолчанию
+            handleButtonClick(text);
         }
     }, [onPress, handleButtonClick, text]);
 

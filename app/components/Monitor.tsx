@@ -6,6 +6,10 @@ import { CONTAINER_PADDING, MonitorHeight, WindowWidth } from "../constants/Scre
 
 export default function Monitor() {
 
+    const BASIC_FONT_SIZE = 14
+    const MIN_FONT_SIZE = 8
+    const CHAR_WIDTH_RATIO = 0.6
+
     const { firstValue,
         secondValue,
         currentValue,
@@ -18,37 +22,38 @@ export default function Monitor() {
         isResultVisible,
     } = useContext(CalcContext)
 
+    const getFontSize = (text: string | null, basicSize = BASIC_FONT_SIZE) => {
+        if (text === null) return basicSize
+        const availableWidth = WindowWidth - CONTAINER_PADDING * 2 - 150;
+        const textLength = text.length;
+        
+        if (textLength <= 3) return basicSize;
+        
+        const neededSize = availableWidth / (textLength * CHAR_WIDTH_RATIO);
+        
+        const finalSize = Math.max(MIN_FONT_SIZE, Math.min(basicSize, neededSize));
+        return finalSize
+    }
+
     return (
         <View style={styles.monitor}>
             <View style={styles.monitorVariables}>
-                <Text numberOfLines={1}
-                    adjustsFontSizeToFit
-                    minimumFontScale={0.9} style={[styles.monitorText, { opacity: isValue0Visible ? 1 : 0 }]}>value-0: {firstValue ?? 'no'}</Text>
+                <Text numberOfLines={1} style={[styles.monitorText, { opacity: isValue0Visible ? 1 : 0, fontSize: getFontSize(firstValue) }]}>value-0: {firstValue ?? 'no'}</Text>
 
-                <Text numberOfLines={1}
-                    adjustsFontSizeToFit
-                    minimumFontScale={0.9} style={[styles.monitorText, { opacity: isLastOperationVisible ? 1 : 0 }]}>operation: {lastOperationValue ?? 'no'}</Text>
+                <Text numberOfLines={1} style={[styles.monitorText, { opacity: isLastOperationVisible ? 1 : 0}]}>operation: {lastOperationValue ?? 'no'}</Text>
             </View>
             <View style={styles.monitorCurrent}>
                 <Text
                     numberOfLines={1}
-                    adjustsFontSizeToFit
-                    minimumFontScale={0.9}
-                    style={styles.monitorCurrentText}
+                    style={[styles.monitorCurrentText, { fontSize: getFontSize(currentValue, 72) }]}
                 >
                     {currentValue}
                 </Text>
             </View>
             <View style={styles.monitorVariables}>
-                <Text numberOfLines={1}
-                    adjustsFontSizeToFit
-                    minimumFontScale={0.9} style={[styles.monitorText, { opacity: isValue1Visible ? 1 : 0 }]}>value-1: {secondValue ?? 'no'}</Text>
-                {isPercented && <Text numberOfLines={1}
-                    adjustsFontSizeToFit
-                    minimumFontScale={0.9} style={styles.monitorText}>%</Text>}
-                <Text numberOfLines={1}
-                    adjustsFontSizeToFit
-                    minimumFontScale={0.9} style={[styles.monitorText, { opacity: isResultVisible ? 1 : 0 }]}>result: {resultValue ?? 'no'}</Text>
+                <Text numberOfLines={1} style={[styles.monitorText, { opacity: isValue1Visible ? 1 : 0, fontSize: getFontSize(secondValue) }]}>value-1: {secondValue ?? 'no'}</Text>
+                {isPercented && <Text numberOfLines={1} style={styles.monitorText}>%</Text>}
+                <Text numberOfLines={1} style={[styles.monitorText, { opacity: isResultVisible ? 1 : 0, fontSize: getFontSize(resultValue) }]}>result: {resultValue ?? 'no'}</Text>
             </View>
         </View>
     )
@@ -75,8 +80,6 @@ const styles = StyleSheet.create({
     monitorText: {
         color: Colors.monitorText,
         fontFamily: "RobotoMono-Medium",
-        fontSize: 14,
-        maxWidth: "45%"
     },
     monitorCurrent: {
         justifyContent: "center",
@@ -86,7 +89,6 @@ const styles = StyleSheet.create({
         color: Colors.monitorText,
         fontFamily: 'Orbitron-Regular',
         paddingHorizontal: 9,
-        fontSize: 72,
         textAlign: "right"
     },
 })

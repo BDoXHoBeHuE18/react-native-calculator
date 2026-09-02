@@ -1,5 +1,6 @@
 {
   "expo": {
+    "homepage": "https://bdoxhobehue18.github.io/react-native-calculator/",
     "name": "calcapp",
     "slug": "calcapp",
     "version": "1.0.0",
@@ -23,10 +24,13 @@
       "package": "com.sleepyafterrain.calcapp"
     },
     "web": {
-      "bundler": "metro",
       "output": "static",
-      "hashProvider": "hash",
-      "baseUrl": "/react-native-calculator"
+      "favicon": "/assets/images/favicon.png",
+      "build": {
+        "babel": {
+          "include": ["@expo/vector-icons"]
+        }
+      }
     },
     "plugins": [
       "expo-router",
@@ -44,6 +48,7 @@
       ]
     ],
     "experiments": {
+      "baseUrl": "/react-native-calculator",
       "typedRoutes": true,
       "reactCompiler": true
     },

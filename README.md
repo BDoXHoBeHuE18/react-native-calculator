@@ -9,4 +9,3 @@ So... Calculator as first steps is a good idea I think.
 ## Visuals
 UI components were inspired of this [Pixso art](https://pixso.net/community/file/BokKzmgUdrQ7OsbmGdeixA).  
 Some retro+pixel vibes. I really like it.
-

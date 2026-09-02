@@ -1,7 +1,8 @@
 import { createContext, ReactNode, useEffect, useMemo, useReducer, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from "expo-router";
-import { MAX_CURRENT_VALUE_LENGTH } from "../constants/ScreenConfig";
+import { MAX_CURRENT_VALUE_LENGTH, ROUND_TO } from "../constants/ScreenConfig";
+import { Big } from 'big.js'
 
 export const CalcContext = createContext<any>(null)
 
@@ -12,21 +13,40 @@ interface CalcProviderProps {
 const STORAGE_KEY = '@settings_states'
 const CalcProvider = ({ children }: CalcProviderProps) => {
 
-    const router = useRouter() 
+    const router = useRouter()
 
-    const getResultOperation = (val1: number, val2: number) => {
-        let result = 0
-        if (lastOperationValue === '+') {
-            result = val1 + val2
-        } else if (lastOperationValue === '-') {
-            result = val1 - val2
-        } else if (lastOperationValue === '÷') {
-            result = val1 / val2
-        } else if (lastOperationValue === '×') {
-            result = val1 * val2
+    const normalizeValue = (value: Big | number) => {
+        const valueStr = value.toString()
+        if (valueStr.length > MAX_CURRENT_VALUE_LENGTH)
+            return value.toFixed(ROUND_TO).toString()
+        return valueStr
+    }
+
+    const getResultOperation = (val1: Big, val2: Big, percentOperation = false) => {
+        let result = new Big(0)
+
+        if (percentOperation) {
+            if (lastOperationValue === '+') {
+                result = val1.plus(val1.mul(val2.div(100)))
+            } else if (lastOperationValue === '-') {
+                result = val1.minus(val1.mul(val2.div(100)))
+            } else if (lastOperationValue === '÷') {
+                result = val1.div(val2).mul(100)
+            } else if (lastOperationValue === '×') {
+                result = val2.div(100).mul(val1)
+            }
         }
-        let cleanStr = parseFloat(result.toFixed(MAX_CURRENT_VALUE_LENGTH)).toString();
-        return cleanStr;
+
+        else if (lastOperationValue === '+') {
+            result = val1.plus(val2)
+        } else if (lastOperationValue === '-') {
+            result = val1.minus(val2)
+        } else if (lastOperationValue === '÷') {
+            result = val1.div(val2)
+        } else if (lastOperationValue === '×') {
+            result = val1.mul(val2)
+        }
+        return result
     }
 
     const clearAllStates = () => {
@@ -117,9 +137,9 @@ const CalcProvider = ({ children }: CalcProviderProps) => {
                 } else if (value !== '0' && !originallyWasFinal) {
                     let val1 = resultValue !== null ? parseFloat(resultValue) : parseFloat(firstValue);
                     let val2 = parseFloat(value);
-                    let result = getResultOperation(val1, val2);
-                    setCurrentValue(result);
-                    setResultValue(result);
+                    let result = getResultOperation(Big(val1), Big(val2));
+                    setCurrentValue(normalizeValue(Big(result)));
+                    setResultValue(normalizeValue(result));
                     setFirstValue(val1.toString());
                     setSecondValue(val2.toString());
                     setIsInterimResult(true);
@@ -142,20 +162,20 @@ const CalcProvider = ({ children }: CalcProviderProps) => {
         }
 
         else if (text === '=' && firstValue !== null) {
-            let val1 = 0, val2 = 0, result = '0'
+            let val1 = Big(0), val2 = Big(0), result = Big(0)
             if (isInterimResult || isFinalResult) {
-                val1 = parseFloat(value)
-                val2 = parseFloat(secondValue ?? '0')
-                result = getResultOperation(val1, val2)
+                val1 = Big(value)
+                val2 = Big(secondValue ?? '0')
+                result = getResultOperation(Big(val1), Big(val2))
                 setIsInterimResult(false)
                 setIsFinalResult(false)
             } else {
-                val1 = resultValue !== null ? parseFloat(resultValue) : parseFloat(firstValue)
-                val2 = parseFloat(value)
+                val1 = resultValue !== null ? Big(resultValue) : Big(firstValue)
+                val2 = Big(value)
                 result = getResultOperation(val1, val2)
             }
-            setCurrentValue(result)
-            setResultValue(result)
+            setCurrentValue(normalizeValue(result))
+            setResultValue(normalizeValue(result))
             setFirstValue(val1.toString())
             setSecondValue(val2.toString())
             setIsFinalResult(true)
@@ -167,15 +187,7 @@ const CalcProvider = ({ children }: CalcProviderProps) => {
 
             let val1 = resultValue ? parseFloat(resultValue) : parseFloat(firstValue)
             let val2 = parseFloat(value)
-            let result = 0
-            if (lastOperationValue === '+')
-                result = val1 + val2 / 100 * val1
-            else if (lastOperationValue === '-')
-                result = val1 - val2 / 100 * val1
-            else if (lastOperationValue === '×')
-                result = val2 / 100 * val1
-            else if (lastOperationValue === '÷')
-                result = val1 / val2 * 100
+            let result = getResultOperation(Big(val1), Big(val2), true)
             setCurrentValue(parseFloat(result.toFixed(MAX_CURRENT_VALUE_LENGTH - 1)).toString())
             setResultValue(parseFloat(result.toFixed(MAX_CURRENT_VALUE_LENGTH - 1)).toString())
             setFirstValue(val1.toString())
@@ -190,7 +202,7 @@ const CalcProvider = ({ children }: CalcProviderProps) => {
             const num = parseFloat(value);
             if (num >= 0) {
                 const rootResult = Math.sqrt(num);
-                const cleanStr = parseFloat(rootResult.toFixed(MAX_CURRENT_VALUE_LENGTH - 1)).toString();
+                const cleanStr = normalizeValue(rootResult);
                 setCurrentValue(cleanStr);
             } else {
                 setCurrentValue('0');
